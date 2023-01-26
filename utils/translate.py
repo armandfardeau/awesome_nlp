@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+from models.language_detection import perform_language_detection
 
 
 def send_request(text, source_lang, target_lang="EN"):
@@ -13,9 +14,7 @@ def send_request(text, source_lang, target_lang="EN"):
     payload = json.dumps({
         "source_lang": source_lang,
         "target_lang": target_lang,
-        "text": [
-            text
-        ]
+        "text": [text]
     })
 
     headers = {
@@ -24,8 +23,22 @@ def send_request(text, source_lang, target_lang="EN"):
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
+    return response.text
 
 
 def perform_translate(text, source_lang, target_lang="EN"):
-    response = send_request(text, source_lang, target_lang)
-    return response.json()['translations'][0]['text']
+    response_text = send_request(text, source_lang, target_lang)
+    print(response_text)
+    return json.loads(response_text)['translations'][0]['text']
+
+
+def translate_request(request_content):
+    lang = perform_language_detection(request_content['content'])[0]['label']
+
+    if lang != "EN":
+        request_content['content'] = perform_translate(request_content['content'], lang)
+        request_content['lang'] = lang
+    else:
+        request_content['lang'] = "EN"
+
+    return request_content
