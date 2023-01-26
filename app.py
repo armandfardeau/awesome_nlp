@@ -52,3 +52,8 @@ def generate():
     translated_response = perform_translate(response[0]["generated_text"], source_lang="EN",
                                             target_lang=request_content['lang'])
     return jsonify(content=translated_response)
+
+@app.route('/classify-image', methods=['POST'])
+def classify_image():
+    request_content = request.get_json()
+    return jsonify(content=perform_classify_image(request_content['content']))

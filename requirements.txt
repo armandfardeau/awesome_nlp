@@ -22,6 +22,7 @@ multiprocess==0.70.14
 numpy==1.24.1
 packaging==23.0
 pandas==1.5.3
+Pillow==9.4.0
 pyarrow==10.0.1
 python-dateutil==2.8.2
 pytz==2022.7.1
