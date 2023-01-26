@@ -16,7 +16,7 @@ def ping():
 def summarize():
     request_content = translate_request(request.get_json())
     response = perform_summarize(request_content['content'])
-    translated_response = perform_translate(response, source_lang="EN", target_lang=request_content['lang'])
+    translated_response = perform_translate(response[0]["summary_text"], source_lang="EN", target_lang=request_content['lang'])
     return jsonify(content=translated_response)
 
 
