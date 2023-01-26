@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from models.summarize import perform_summarize
 from models.sentiment_analysis import perform_sentiment_analysis
 from models.language_detection import perform_language_detection
-from models.question_answerer import perform_answerer
+from models.question_answerer import perform_question_answerer
+from models.text_generation import perform_text_generation
 from utils.translate import translate_request, perform_translate
 
 app = Flask(__name__)
@@ -38,6 +39,16 @@ def language_detection():
 @app.route('/question-answerer', methods=['POST'])
 def answer():
     request_content = translate_request(request.get_json())
-    response = perform_answerer(request_content['content'])
+    response = perform_question_answerer(request_content['content'])
     translated_response = perform_translate(response["answer"], source_lang="EN", target_lang=request_content['lang'])
+    return jsonify(content=translated_response)
+
+
+@app.route('/generate-text', methods=['POST'])
+def generate():
+    request_content = translate_request(request.get_json())
+    response = perform_text_generation(request_content['content'], request_content['max_length'],
+                                       request_content['do_sample'])
+    translated_response = perform_translate(response[0]["generated_text"], source_lang="EN",
+                                            target_lang=request_content['lang'])
     return jsonify(content=translated_response)
