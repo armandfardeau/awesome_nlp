@@ -9,7 +9,7 @@ from utils.translate import translate_request, perform_translate
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/ping')
 def ping():
     return jsonify(content="pong")
 
