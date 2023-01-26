@@ -13,5 +13,3 @@ build:
 
 bash:
 	docker run -it -e DEEPL_API_KEY="$(DEEPL_API_KEY)" --rm $(TAG) /bin/bash
-
-echo:
