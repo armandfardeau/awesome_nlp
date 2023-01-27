@@ -1,6 +1,9 @@
 PORT := 8080
 TAG := awesome_nlp
 
+download:
+	ls -d cache/* | xargs -I {} bash -c "cd '{}' && git lfs pull"
+
 start:
 	@make build
 	@make run
