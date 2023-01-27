@@ -27,6 +27,9 @@ def send_request(text, source_lang, target_lang="EN"):
 
 
 def perform_translate(text, source_lang, target_lang="EN"):
+    if source_lang == target_lang:
+        return text
+
     response_text = send_request(text, source_lang, target_lang)
     print(response_text)
     return json.loads(response_text)['translations'][0]['text']
@@ -35,7 +38,7 @@ def perform_translate(text, source_lang, target_lang="EN"):
 def translate_request(request_content):
     lang = perform_language_detection(request_content['content'])[0]['label']
 
-    if lang != "EN":
+    if lang != "EN" or lang != "en":
         request_content['content'] = perform_translate(request_content['content'], lang)
         request_content['lang'] = lang
     else:
