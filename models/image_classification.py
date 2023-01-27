@@ -1,5 +1,5 @@
 from transformers import pipeline
-from pillow import Image
+from PIL import Image
 import requests
 
 def perform_classify_image(url):
