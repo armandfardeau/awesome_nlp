@@ -4,6 +4,7 @@ from models.sentiment_analysis import perform_sentiment_analysis
 from models.language_detection import perform_language_detection
 from models.question_answerer import perform_question_answerer
 from models.text_generation import perform_text_generation
+from models.image_classification import perform_classify_image
 from utils.translate import translate_request, perform_translate
 
 app = Flask(__name__)
