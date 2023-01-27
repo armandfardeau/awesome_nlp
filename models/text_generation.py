@@ -1,6 +1,8 @@
 from transformers import pipeline
+from utils.config import cache
 
 
+@cache.memoize()
 def perform_text_generation(text, max_length=50, do_sample="False"):
     print("Performing text generation for", text)
     sample = True if do_sample == "True" else False

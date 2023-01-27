@@ -2,8 +2,10 @@ import os
 import requests
 import json
 from models.language_detection import perform_language_detection
+from utils.config import cache
 
 
+@cache.memoize()
 def send_request(text, source_lang, target_lang="en"):
     api_key = os.environ.get("DEEPL_API_KEY")
     if api_key == '' or api_key is None:
@@ -20,6 +22,7 @@ def send_request(text, source_lang, target_lang="en"):
     return response.text
 
 
+@cache.memoize()
 def perform_translate(text, source_lang, target_lang="en"):
     if source_lang == target_lang:
         return text
@@ -28,6 +31,7 @@ def perform_translate(text, source_lang, target_lang="en"):
     return json.loads(response_text)['translations'][0]['text']
 
 
+@cache.memoize()
 def translate_request(request_content):
     lang = perform_language_detection(request_content['content'])[0]['label']
 

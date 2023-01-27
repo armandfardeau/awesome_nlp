@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+from utils.config import cache, config
+import os
 from models.summarize import perform_summarize
 from models.sentiment_analysis import perform_sentiment_analysis
 from models.language_detection import perform_language_detection
@@ -8,8 +10,10 @@ from models.image_classification import perform_classify_image
 from utils.translate import translate_request, perform_translate
 
 app = Flask(__name__)
+cache.init_app(app, config=config)
 
 
+@cache.cached()
 @app.route('/ping')
 def ping():
     return jsonify(content="pong")

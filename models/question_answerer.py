@@ -1,6 +1,8 @@
 from transformers import pipeline
+from utils.config import cache
 
 
+@cache.memoize()
 def perform_question_answerer(content):
     print("Performing question answerer for", content)
     question = content['question']
