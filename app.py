@@ -18,7 +18,7 @@ def ping():
 def summarize():
     request_content = translate_request(request.get_json())
     response = perform_summarize(request_content['content'])
-    translated_response = perform_translate(response[0]["summary_text"], source_lang="EN",
+    translated_response = perform_translate(response[0]["summary_text"], source_lang="en",
                                             target_lang=request_content['lang'])
     return jsonify(content=translated_response)
 
@@ -38,9 +38,12 @@ def language_detection():
 
 @app.route('/question-answerer', methods=['POST'])
 def answer():
-    request_content = translate_request(request.get_json())
-    response = perform_question_answerer(request_content['content'])
-    translated_response = perform_translate(response["answer"], source_lang="EN", target_lang=request_content['lang'])
+    request_content = request.get_json()
+    question = translate_request({'content': request_content['content']['question']})
+    knowledge = translate_request({'content': request_content['content']['knowledge']})
+    lang = question['lang']
+    response = perform_question_answerer({"question": question['content'], "knowledge": knowledge['content']})
+    translated_response = perform_translate(response["answer"], source_lang="en", target_lang=lang)
     return jsonify(content=translated_response)
 
 
@@ -49,9 +52,10 @@ def generate():
     request_content = translate_request(request.get_json())
     response = perform_text_generation(request_content['content'], request_content['max_length'],
                                        request_content['do_sample'])
-    translated_response = perform_translate(response[0]["generated_text"], source_lang="EN",
+    translated_response = perform_translate(response[0]["generated_text"], source_lang="en",
                                             target_lang=request_content['lang'])
     return jsonify(content=translated_response)
+
 
 @app.route('/classify-image', methods=['POST'])
 def classify_image():
