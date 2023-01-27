@@ -12,8 +12,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY cache ./cache
-
 COPY . .
 
 EXPOSE 8080
