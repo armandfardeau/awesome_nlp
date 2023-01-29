@@ -3,7 +3,7 @@ PORT ?= 8080
 TAG ?= awesome_nlp
 WORKERS ?= 4
 TIMEOUT ?= 600
-LOG_LEVEL ?= INFO
+LOGLEVEL ?= INFO
 
 setup:
 	python setup_cache.py
