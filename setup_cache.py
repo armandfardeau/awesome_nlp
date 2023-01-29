@@ -1,5 +1,8 @@
 import os
 import json
+import subprocess
+import re
+import pdb
 
 
 def create_cache_dir():
@@ -29,8 +32,47 @@ def download_model(model_name):
         os.chdir(previous)
 
 
+def size_to_bytes(size, unity):
+    if unity == "GB":
+        return float(size) * 1024 * 1024 * 1024
+    elif unity == "MB":
+        return float(size) * 1024 * 1024
+    elif unity == "KB":
+        return float(size) * 1024
+    else:
+        return float(size)
+
+
+def get_lfs_size(path):
+    previous = os.getcwd()
+    os.chdir(path)
+    lfs_sizes = []
+    output = subprocess.run(["git", "lfs", "ls-files", "-s"], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    for size in output.split("\n"):
+        if size != "":
+            match = re.search(r'\((.*?)\)', size).group(1).split(" ")
+            lfs_sizes.append(size_to_bytes(match[0], match[1]))
+    os.chdir(previous)
+    return sum(lfs_sizes)
+
+
+def get_download_order():
+    paths = os.listdir("cache")
+    size_dict = {}
+    for path in paths:
+        size_dict[path] = get_lfs_size("cache/" + path)
+    sorted_dict = sorted(size_dict, key=size_dict.get)
+    print("Download order: " + str(sorted_dict))
+    return sorted_dict
+
+
 def download_assets():
-    os.system("ls -d cache/* | xargs -I {} bash -c \"cd '{}' && git lfs pull\"")
+    order = get_download_order()
+    for path in order:
+        previous = os.getcwd()
+        os.chdir("./cache/" + path)
+        os.system("git lfs pull")
+        os.chdir(previous)
 
 
 def download_models():
