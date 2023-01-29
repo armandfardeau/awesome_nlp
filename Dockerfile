@@ -5,7 +5,8 @@ PORT=8080 \
 FLASK_DEBUG="false" \
 TIMEOUT=120 \
 WORKERS=1 \
-TRANSFORMERS_CACHE="/tmp/transformers"
+TRANSFORMERS_CACHE="/tmp/transformers" \
+LOGLEVEL=info
 
 WORKDIR /app
 
@@ -16,4 +17,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD gunicorn --bind 0.0.0.0:$PORT --workers $WORKERS --access-logfile - --error-logfile - --log-level debug --timeout $TIMEOUT wsgi:app
+CMD gunicorn --bind 0.0.0.0:$PORT --workers $WORKERS --access-logfile - --error-logfile - --log-level LOGLEVEL --timeout $TIMEOUT wsgi:app
