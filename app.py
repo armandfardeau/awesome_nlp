@@ -1,6 +1,6 @@
+import os
 from flask import Flask, jsonify, request
 from utils.config import cache, config
-import os
 from models.summarize import perform_summarize
 from models.sentiment_analysis import perform_sentiment_analysis
 from models.language_detection import perform_language_detection
@@ -12,8 +12,7 @@ from utils.pipelines_helper import preload_pipelines
 
 app = Flask(__name__)
 cache.init_app(app, config=config)
-
-if os.environ.get('PRELOAD_PIPELINES') == "true":
+if os.environ.get('PRELOAD_PIPELINES') == 'true':
     preload_pipelines()
 
 @cache.cached()
