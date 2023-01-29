@@ -4,5 +4,5 @@
   "question-answering": "distilbert-base-uncased-distilled-squad",
   "sentiment-analysis": "distilbert-base-uncased-finetuned-sst-2-english",
   "summarization": "facebook/bart-large-cnn",
-  "text-generation": "EleutherAI/gpt-j-6B"
+  "text-generation": "gpt2"
 }

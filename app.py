@@ -57,8 +57,7 @@ def answer():
 @app.route('/generate-text', methods=['POST'])
 def generate():
     request_content = translate_request(request.get_json())
-    response = perform_text_generation(request_content['content'], request_content['max_length'],
-                                       request_content['do_sample'])
+    response = perform_text_generation(request_content['content'], request_content['max_length'])
     translated_response = perform_translate(response[0]["generated_text"], source_lang="en",
                                             target_lang=request_content['lang'])
     return jsonify(content=translated_response)
