@@ -6,4 +6,4 @@ from utils.config import cache
 def perform_text_generation(text, max_length=50):
     print("Performing text generation for", text)
     text_generator = from_pipeline("text-generation")
-    return text_generator(text, max_length=max_length, num_return_sequences=1)
+    return text_generator(text, max_length=max_length, num_return_sequences=1, pad_token_id=50256)
