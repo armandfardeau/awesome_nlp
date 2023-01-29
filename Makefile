@@ -1,14 +1,14 @@
 PWD := $(shell pwd)
-PORT := 8080
-TAG := awesome_nlp
-WORKERS := 4
-TIMEOUT := 600
+PORT ?= 8080
+TAG ?= awesome_nlp
+WORKERS ?= 4
+TIMEOUT ?= 600
 
-download:
-	ls -d cache/* | xargs -I {} bash -c "cd '{}' && git lfs pull"
+setup:
+	python setup_cache.py
 
 start:
-	@make download
+	@make setup
 	@make build
 	@make run
 

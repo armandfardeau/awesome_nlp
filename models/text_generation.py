@@ -1,10 +1,9 @@
-from transformers import pipeline
+from utils.pipelines_helper import from_pipeline
 from utils.config import cache
 
 
 @cache.memoize()
-def perform_text_generation(text, max_length=50, do_sample="False"):
+def perform_text_generation(text, max_length=50):
     print("Performing text generation for", text)
-    sample = True if do_sample == "True" else False
-    text_generator = pipeline("text-generation", model="/app/cache/gpt-j-6B")
-    return text_generator(text, max_length=max_length, do_sample=sample)
+    text_generator = from_pipeline("text-generation")
+    return text_generator(text, max_length=max_length, num_return_sequences=1, pad_token_id=50256)

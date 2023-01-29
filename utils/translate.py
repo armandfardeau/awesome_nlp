@@ -33,12 +33,13 @@ def perform_translate(text, source_lang, target_lang="en"):
 
 @cache.memoize()
 def translate_request(request_content):
-    lang = perform_language_detection(request_content['content'])[0]['label']
+    if "lang" in request_content:
+        lang = request_content['lang']
+    else:
+        lang = perform_language_detection(request_content['content'])[0]['label']
+        request_content['lang'] = lang
 
     if lang != "en":
         request_content['content'] = perform_translate(request_content['content'], lang)
-        request_content['lang'] = lang
-    else:
-        request_content['lang'] = "en"
 
     return request_content
