@@ -5,6 +5,6 @@ config = {
     "DEBUG": os.environ.get("FLASK_DEBUG"),
     "CACHE_TYPE": "FileSystemCache",
     "CACHE_DIR": "/app/tmp/cache",
-    "CACHE_THRESHOLD": 10000
+    "CACHE_THRESHOLD": 86400
 }
 cache = Cache()

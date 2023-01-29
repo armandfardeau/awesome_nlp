@@ -1,7 +1,9 @@
 from transformers import pipeline
+from utils.config import cache
 import os
 import json
 
+@cache.memoize()
 def pipeline_file():
     path = "/app/pipelines_config.json"
     if os.path.exists(path):
@@ -11,8 +13,11 @@ def pipeline_file():
         print(config)
         return config
 
+@cache.memoize()
 def cached_model_name(model_name):
     return model_name.split("/")[-1]
+
+@cache.memoize()
 def get_model(model_name):
     path = os.path.realpath("/app/cache/" + cached_model_name(model_name))
     if os.path.exists(path):
@@ -21,6 +26,8 @@ def get_model(model_name):
     else:
         print("Model not found in cache: " + path)
         return model_name
+
+@cache.memoize()
 def pipeline_config():
     pipeline_config_dict = pipeline_file()
     configs = {}
@@ -29,14 +36,17 @@ def pipeline_config():
         configs[config] = get_model(pipeline_config_dict.get(config))
     return configs
 
+@cache.memoize()
 def preload_pipelines():
     pipeline_config_dict = pipeline_config()
     for config in pipeline_config_dict:
         return create_pipeline(config, pipeline_config_dict.get(config))
 
+@cache.memoize()
 def from_pipeline(pipeline_name):
     pipeline_config_dict = pipeline_config()
     return create_pipeline(pipeline_name, pipeline_config_dict.get(pipeline_name))
 
+@cache.memoize()
 def create_pipeline(pipeline_name, model_name):
     return pipeline(pipeline_name, model=model_name)

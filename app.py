@@ -8,10 +8,13 @@ from models.question_answerer import perform_question_answerer
 from models.text_generation import perform_text_generation
 from models.image_classification import perform_classify_image
 from utils.translate import translate_request, perform_translate
+from utils.pipelines_helper import preload_pipelines
 
 app = Flask(__name__)
 cache.init_app(app, config=config)
 
+if os.environ.get('PRELOAD_PIPELINES') == "true":
+    preload_pipelines()
 
 @cache.cached()
 @app.route('/ping')
