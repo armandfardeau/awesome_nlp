@@ -1,9 +1,8 @@
 PWD := $(shell pwd)
-PORT := 8080
-TAG := awesome_nlp
-WORKERS := 4
-TIMEOUT := 600
-PRELOAD_PIPELINES := "true"
+PORT ?= 8080
+TAG ?= awesome_nlp
+WORKERS ?= 4
+TIMEOUT ?= 600
 
 setup:
 	python setup_cache.py
@@ -14,7 +13,7 @@ start:
 	@make run
 
 run:
-	docker run -it -v $(PWD)/cache:/app/cache -e PRELOAD_PIPELINES=$(PRELOAD_PIPELINES) -e TIMEOUT=$(TIMEOUT) -e WORKERS=$(WORKERS) -e DEEPL_API_KEY="$(DEEPL_API_KEY)" -e PORT=$(PORT) -p $(PORT):$(PORT) --rm $(TAG)
+	docker run -it -v $(PWD)/cache:/app/cache -e TIMEOUT=$(TIMEOUT) -e WORKERS=$(WORKERS) -e DEEPL_API_KEY="$(DEEPL_API_KEY)" -e PORT=$(PORT) -p $(PORT):$(PORT) --rm $(TAG)
 
 build:
 	docker build . --compress --tag $(TAG)

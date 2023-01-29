@@ -36,11 +36,6 @@ def pipeline_config():
         configs[config] = get_model(pipeline_config_dict.get(config))
     return configs
 
-@cache.memoize()
-def preload_pipelines():
-    pipeline_config_dict = pipeline_config()
-    for config in pipeline_config_dict:
-        return create_pipeline(config, pipeline_config_dict.get(config))
 
 @cache.memoize()
 def from_pipeline(pipeline_name):
