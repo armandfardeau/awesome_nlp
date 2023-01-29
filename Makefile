@@ -5,11 +5,11 @@ WORKERS := 4
 TIMEOUT := 600
 PRELOAD_PIPELINES := "true"
 
-download:
-	ls -d cache/* | xargs -I {} bash -c "cd '{}' && git lfs pull"
+setup:
+	python setup_cache.py
 
 start:
-	@make download
+	@make setup
 	@make build
 	@make run
 
