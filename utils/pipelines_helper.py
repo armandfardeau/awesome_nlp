@@ -3,6 +3,7 @@ from utils.config import cache
 import os
 import json
 
+
 @cache.memoize()
 def pipeline_file():
     path = "/app/pipelines_config.json"
@@ -13,9 +14,11 @@ def pipeline_file():
         print(config)
         return config
 
+
 @cache.memoize()
 def cached_model_name(model_name):
     return model_name.split("/")[-1]
+
 
 @cache.memoize()
 def get_model(model_name):
@@ -27,6 +30,7 @@ def get_model(model_name):
         print("Model not found in cache: " + path)
         return model_name
 
+
 @cache.memoize()
 def pipeline_config():
     pipeline_config_dict = pipeline_file()
@@ -37,11 +41,13 @@ def pipeline_config():
     return configs
 
 
-@cache.memoize()
 def from_pipeline(pipeline_name):
-    pipeline_config_dict = pipeline_config()
-    return create_pipeline(pipeline_name, pipeline_config_dict.get(pipeline_name))
-
-@cache.memoize()
-def create_pipeline(pipeline_name, model_name):
-    return pipeline(pipeline_name, model=model_name)
+    cached_pipeline = cache.get(pipeline_name)
+    if cached_pipeline is None:
+        print("Pipeline not found in cache: " + pipeline_name)
+        pipeline_config_dict = pipeline_config()
+        cached_pipeline = pipeline(pipeline_name, model=pipeline_config_dict.get(pipeline_name))
+        cache.set(pipeline_name, cached_pipeline)
+    else:
+        print("Pipeline found in cache: " + pipeline_name)
+    return cached_pipeline
