@@ -36,8 +36,9 @@ def pipeline_config():
     pipeline_config_dict = pipeline_file()
     configs = {}
     for config in pipeline_config_dict:
-        print("Loading pipeline config: " + pipeline_config_dict.get(config))
-        configs[config] = get_model(pipeline_config_dict.get(config))
+        model_name = pipeline_config_dict.get(config).get("model_name")
+        print("Loading pipeline config: " + model_name)
+        configs[config] = get_model(model_name)
     return configs
 
 

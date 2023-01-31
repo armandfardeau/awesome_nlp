@@ -1,8 +1,26 @@
 {
-  "image-classification": "google/vit-base-patch16-224",
-  "text-classification" : "papluca/xlm-roberta-base-language-detection",
-  "question-answering": "distilbert-base-uncased-distilled-squad",
-  "sentiment-analysis": "distilbert-base-uncased-finetuned-sst-2-english",
-  "summarization": "facebook/bart-large-cnn",
-  "text-generation": "gpt2"
+  "image-classification": {
+    "description": "ViT is a vision transformer, a new approach to image classification that does not rely on convolutions. It is based on the Transformer architecture and pre-trained on ImageNet. It achieves state-of-the-art results on ImageNet, surpassing ResNet and EfficientNet.",
+    "model_name": "google/vit-base-patch16-224"
+  },
+  "text-classification": {
+    "description": "XLM-RoBERTa is a multilingual variant of RoBERTa trained on 2.5TB of filtered CommonCrawl data in 100 languages. It is based on the RoBERTa architecture and is trained with a self-supervised objective combining a masked language modeling (MLM) and a cross-lingual language modeling (CLM) task. XLM-RoBERTa is the best performing multilingual model on GLUE and SQuAD 2.0, and achieves state-of-the-art results on many other multilingual benchmarks.",
+    "model_name": "papluca/xlm-roberta-base-language-detection"
+  },
+  "question-answering": {
+    "description": "DistilBERT is a small, fast, cheap and light Transformer model trained by distilling BERT base. It has 40% less parameters than bert-base-uncased, runs 60% faster while preserving over 95% of BERT’s performances as measured on the GLUE language understanding benchmark.",
+    "model_name": "distilbert-base-uncased-distilled-squad"
+  },
+  "sentiment-analysis": {
+    "description": "DistilBERT is a small, fast, cheap and light Transformer model trained by distilling BERT base. It has 40% less parameters than bert-base-uncased, runs 60% faster while preserving over 95% of BERT’s performances as measured on the GLUE language understanding benchmark.",
+    "model_name": "distilbert-base-uncased-finetuned-sst-2-english"
+  },
+  "summarization": {
+    "description": "BART is a sequence-to-sequence model trained with denoising as pretraining objective.",
+    "model_name": "facebook/bart-large-cnn"
+  },
+  "text-generation": {
+    "description": "GPT-2 is a large transformer-based language model with 1.5 billion parameters, trained on a dataset of 8 million web pages.",
+    "model_name": "gpt2"
+  }
 }
