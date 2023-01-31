@@ -78,8 +78,9 @@ def download_assets():
 def download_models():
     config_file = config()
     for model_config in config_file:
-        print("Performing install for " + config_file.get(model_config))
-        download_model(config_file.get(model_config))
+        model_name = config_file.get(model_config).get("model_name")
+        print("Performing install for " + model_name)
+        download_model(model_name)
 
 
 create_cache_dir()

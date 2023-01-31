@@ -1,5 +1,4 @@
-import os
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from utils.config import cache, config
 from models.summarize import perform_summarize
 from models.sentiment_analysis import perform_sentiment_analysis
@@ -23,7 +22,7 @@ def ping():
 @cache.cached()
 @app.route('/')
 def root():
-    return {"content": str(pipeline_file())}
+    return jsonify(content=pipeline_file())
 
 
 @app.route('/summarize', methods=['POST'])
