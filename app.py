@@ -6,6 +6,7 @@ from models.language_detection import perform_language_detection
 from models.question_answerer import perform_question_answerer
 from models.text_generation import perform_text_generation
 from models.image_classification import perform_classify_image
+from models.text_classification import perform_classify_text
 from utils.translate import translate_request, perform_translate
 from utils.pipelines_helper import pipeline_file
 
@@ -70,3 +71,10 @@ def generate():
 def classify_image():
     request_content = request.get_json()
     return {"content": perform_classify_image(request_content['content'])}
+
+
+@app.route('/classify-text', methods=['POST'])
+def classify_text():
+    request_content = translate_request(request.get_json())
+    multi_label = request_content['multi_label'] == "true"
+    return {"content": perform_classify_text(request_content['content'], request_content['labels'], multi_label)}

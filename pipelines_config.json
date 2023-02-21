@@ -22,5 +22,9 @@
   "text-generation": {
     "description": "GPT-2 is a large transformer-based language model with 1.5 billion parameters, trained on a dataset of 8 million web pages.",
     "model_name": "gpt2"
+  },
+  "zero-shot-classification": {
+    "description": "Zero-shot classification is a task where a model is asked to classify a text into a set of categories without being trained on any examples from these categories. The model is trained on a different set of categories, and the task is to predict the category of a text without seeing any examples of this category during training.",
+    "model_name": "facebook/bart-large-mnli"
   }
 }
