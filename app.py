@@ -76,5 +76,5 @@ def classify_image():
 @app.route('/classify-text', methods=['POST'])
 def classify_text():
     request_content = translate_request(request.get_json())
-    multi_label = request_content['multi_label'] == "true"
+    multi_label = (request_content['multi_label'] is True or request_content['multi_label'] == 'true')
     return {"content": perform_classify_text(request_content['content'], request_content['labels'], multi_label)}
